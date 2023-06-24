@@ -1,11 +1,10 @@
 import { useEffect } from "react";
-import { Box, Text, Input, Flex } from "@/components/chakra-provider/chakra";
+import { Box, Text, Input, Flex, useMediaQuery } from "@/components/chakra-provider/chakra";
 import Popup from "../pop-up";
 import { TableType } from "@/types/tableTypes";
 import { set, useForm } from "react-hook-form";
 import { shortenUrlSchema } from "@/utils/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useSession } from "next-auth/react";
 import AppButton from "../app-button";
 import useAxiosAuth from "@/services/hooks/useAxiosAuth";
 import toast from "react-hot-toast";
@@ -18,6 +17,7 @@ interface PropType {
 }
 
 const Edit = ({ openModal, setOpenModal, rowData }: PropType) => {
+  const [isLowerThan1200] = useMediaQuery("(max-width: 1200px)");
   const axiosAuth = useAxiosAuth();
 
   const formHook = useForm({
@@ -66,7 +66,7 @@ const Edit = ({ openModal, setOpenModal, rowData }: PropType) => {
 
   return (
     <Popup
-      maxW="40%"
+      maxW={isLowerThan1200 ? "90%" : "40%"}
       popupOpen={openModal}
       setPopupOpen={setOpenModal}
       closeIcon

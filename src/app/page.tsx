@@ -44,11 +44,10 @@ import useAxiosAuth from "@/services/hooks/useAxiosAuth";
 import toast from "react-hot-toast";
 import useSWR, { mutate } from "swr";
 import RightArrowIcon from "@/assets/icons/right-arrow";
-// import { useClipboard } from "use-clipboard-copy";
 import ThemeToggle from "@/components/theme-toggle";
 
 function Home() {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openViewModal, setOpenViewModal] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -296,7 +295,13 @@ function Home() {
             Shorten Your Loooong Links :)
           </Text>
 
-          <Text lineHeight={"1.5rem"} textAlign={"center"} mt={"1.25rem"} fontWeight={300}>
+          <Text
+            lineHeight={"1.5rem"}
+            textAlign={"center"}
+            mt={"1.25rem"}
+            fontWeight={300}
+            fontSize={{ base: ".75rem", md: "1rem" }}
+          >
             Scissor is an efficient and easy-to-use URL shortening service that streamlines your online experience.
           </Text>
 
@@ -327,13 +332,7 @@ function Home() {
                 />
                 <InputRightElement mt={".5rem"} w={{ base: "5.25rem", md: "11.25rem" }}>
                   {isLowerThan768 ? (
-                    <AppButton
-                      variant={"primary"}
-                      type="submit"
-                      isLoading={isSubmitting}
-                      loadingText="Shortening..."
-                      w={"80%"}
-                    >
+                    <AppButton variant={"primary"} type="submit" isLoading={isSubmitting} w={"80%"}>
                       <RightArrowIcon />
                     </AppButton>
                   ) : (
@@ -387,6 +386,7 @@ function Home() {
         mt={"2.5rem"}
         bg={colorMode === "dark" ? "#0D1117" : "#C9CED6"}
         py={"1rem"}
+        fontSize={{ base: ".75rem", md: "1rem" }}
       >
         Created by @TunjiDev, designed by @mohammedhijas of figma community. ALL RIGHTS RESERVED.
       </Box>

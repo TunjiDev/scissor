@@ -49,7 +49,7 @@ const Popup = ({
         position="relative"
         background={colorMode === "light" ? "#C9CED6" : "#0D1117"}
         py={{ base: "1.2rem", md: "4.8rem" }}
-        px={{ base: "1.2rem", md: "5.2rem" }}
+        px={{ base: "1rem", md: "2.2rem" }}
         {...contentProps}
         color={colorMode === "light" ? "#0D1117" : "#C9CED6"}
       >
@@ -65,7 +65,11 @@ const Popup = ({
           />
         )}
         {description && (
-          <Text fontWeight="bold" fontSize={"30px"} color={colorMode === "light" ? "#0D1117" : "#C9CED6"}>
+          <Text
+            fontWeight="bold"
+            fontSize={{ base: "20px", lg: "30px" }}
+            color={colorMode === "light" ? "#0D1117" : "#C9CED6"}
+          >
             {description}
           </Text>
         )}
