@@ -5,7 +5,7 @@ interface qrCode {
 }
 
 export interface TableType {
-  id: number;
+  id: string;
   shortUrl: string;
   longUrl: string;
   QrCode: qrCode | any;

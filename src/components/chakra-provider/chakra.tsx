@@ -24,6 +24,7 @@ export {
   Avatar,
   Stack,
   useMediaQuery,
+  Switch,
 } from "@chakra-ui/react";
 import theme from "@/utils/theme";
 

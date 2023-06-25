@@ -17,6 +17,7 @@ import {
   MenuList,
   MenuItem,
   useMediaQuery,
+  Switch,
 } from "@/components/chakra-provider/chakra";
 import AppButton from "@/components/app-button";
 import Link from "next/link";
@@ -37,7 +38,7 @@ import { AppTag } from "@/components/tag";
 import Image from "next/image";
 import qrCodeImg from "@/assets/images/qrcode.png";
 import { useSession, signOut } from "next-auth/react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { shortenUrlSchema } from "@/utils/schema";
 import useAxiosAuth from "@/services/hooks/useAxiosAuth";
@@ -50,8 +51,9 @@ function Home() {
   const { colorMode } = useColorMode();
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openViewModal, setOpenViewModal] = useState(false);
+  const [loadingRows, setLoadingRows] = useState<any>([]);
   const [isMounted, setIsMounted] = useState(false);
-  const [row, setRow] = useState<TableType>({} as TableType);
+  const [isRow, setIsRow] = useState<TableType>({} as TableType);
   const { data: session } = useSession();
   const [isLowerThan768] = useMediaQuery("(max-width: 767px)");
   const router = useRouter();
@@ -98,6 +100,29 @@ function Home() {
       });
     }
   };
+
+  const handleStatusToggle = async (data: TableType) => {
+    try {
+      setLoadingRows((prevLoadingRows: any) => [...prevLoadingRows, data.id]);
+      const response = await axiosAuth.patch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/url/${data.id}/status?status=${data.status ? "false" : "true"}`
+      );
+      if (response.status === 200) {
+        toast.success(response?.data.message, {
+          id: "success",
+        });
+        setLoadingRows((prevLoadingRows: any) => prevLoadingRows.filter((row: any) => row !== data.id));
+        mutate(`${process.env.NEXT_PUBLIC_BASE_URL}/user/urls`);
+      }
+    } catch (error: any) {
+      setLoadingRows((prevLoadingRows: any) => prevLoadingRows.filter((row: any) => row !== data.id));
+      return toast.error(`${error?.response?.data?.message || "An error occurred during the process"}`, {
+        id: "error",
+      });
+    }
+  };
+
+  const isRowLoading = (row: TableType) => loadingRows.includes(row.id);
 
   const submit = async (data: any) => {
     if (session) {
@@ -159,7 +184,24 @@ function Home() {
     },
     {
       name: "Status",
-      cell: (row) => <AppTag label={row.status ? "Active" : "Inactive"} />,
+      cell: (row) => (
+        <Flex alignItems={"center"}>
+          <AppTag label={row.status ? "Active" : "Inactive"} />
+          {isRowLoading(row) ? (
+            <Spinner size={"sm"} />
+          ) : (
+            <Switch
+              id={isRow.id}
+              size={"sm"}
+              colorScheme={"green"}
+              isChecked={row.status ? true : false}
+              onChange={() => {
+                handleStatusToggle(row);
+              }}
+            />
+          )}
+        </Flex>
+      ),
     },
     {
       name: "Date",
@@ -176,7 +218,7 @@ function Home() {
                 cursor={"pointer"}
                 color={colorMode === "dark" ? "#C9CED6" : "#11161d"}
                 onClick={() => {
-                  setRow(row);
+                  setIsRow(row);
                   setOpenViewModal(true);
                 }}
               />
@@ -186,7 +228,7 @@ function Home() {
                 cursor={"pointer"}
                 color={colorMode === "dark" ? "#C9CED6" : "#11161d"}
                 onClick={() => {
-                  setRow(row);
+                  setIsRow(row);
                   setOpenEditModal(true);
                 }}
               />
@@ -376,8 +418,8 @@ function Home() {
       </Flex>
 
       {/* MODALS */}
-      <View openModal={openViewModal} setOpenModal={setOpenViewModal} rowData={row} />
-      <Edit openModal={openEditModal} setOpenModal={setOpenEditModal} rowData={row} />
+      <View openModal={openViewModal} setOpenModal={setOpenViewModal} rowData={isRow} />
+      <Edit openModal={openEditModal} setOpenModal={setOpenEditModal} rowData={isRow} />
 
       {/* FOOTER */}
       <Box

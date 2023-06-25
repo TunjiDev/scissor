@@ -1,5 +1,5 @@
-import { Tag, TagLabel, TagRightIcon } from "@chakra-ui/react";
-import LinkIcon from "@/assets/icons/link";
+import { Tag, TagLabel /*TagRightIcon*/ } from "@chakra-ui/react";
+// import LinkIcon from "@/assets/icons/link";
 import React from "react";
 
 type TagProps = {
@@ -19,8 +19,8 @@ const AppTag = ({ label, style }: TagProps) => {
   };
   return (
     <Tag style={style} size={"md"} bg={"transparent"} borderRadius="full" color={colors[label]}>
-      <TagLabel mr={".5rem"}>{label}</TagLabel>
-      <TagRightIcon as={LinkIcon} />
+      <TagLabel /*mr={".5rem"}*/>{label}</TagLabel>
+      {/* <TagRightIcon as={LinkIcon} /> */}
     </Tag>
   );
 };
