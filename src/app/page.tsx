@@ -38,7 +38,7 @@ import { AppTag } from "@/components/tag";
 import Image from "next/image";
 import qrCodeImg from "@/assets/images/qrcode.png";
 import { useSession, signOut } from "next-auth/react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { shortenUrlSchema } from "@/utils/schema";
 import useAxiosAuth from "@/services/hooks/useAxiosAuth";
@@ -46,6 +46,7 @@ import toast from "react-hot-toast";
 import useSWR, { mutate } from "swr";
 import RightArrowIcon from "@/assets/icons/right-arrow";
 import ThemeToggle from "@/components/theme-toggle";
+import Accordion from "@/components/accordion";
 
 function Home() {
   const { colorMode } = useColorMode();
@@ -416,6 +417,21 @@ function Home() {
         {/* THEME TOGGLE */}
         <ThemeToggle />
       </Flex>
+
+      <Box as={"section"} mt={"2rem"}>
+        <Text
+          bg={"radial-gradient(95.19% 12441.23% at 5.56% 79.01%, #EB568E 0%, #144EE3 100%)"}
+          fontSize={{ base: "1rem", md: "1.307rem" }}
+          backgroundClip={"text"}
+          fontWeight={700}
+          textAlign={"center"}
+          mb={"1.5rem"}
+        >
+          FAQs
+        </Text>
+
+        <Accordion />
+      </Box>
 
       {/* MODALS */}
       <View openModal={openViewModal} setOpenModal={setOpenViewModal} rowData={isRow} />
