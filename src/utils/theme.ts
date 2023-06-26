@@ -30,6 +30,7 @@ const colors = Object.freeze({
 
 const fontSizes = Object.freeze({
   ...theme.fontSizes,
+  tiny: "1rem",
   small: "1.2rem",
   label: "1.4rem",
   paragraph: "1.6rem",

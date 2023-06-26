@@ -51,7 +51,7 @@ const AppInput = React.forwardRef<HTMLInputElement, AppInputProps>(
         {label && type !== "password" ? (
           <FormLabel
             htmlFor={id}
-            fontSize={themes.fontSizes.small}
+            fontSize={{ base: themes.fontSizes.tiny, lg: themes.fontSizes.small }}
             fontWeight="500"
             color={colorMode === "dark" ? "#C9CED6" : "#11161d"}
           >
@@ -60,7 +60,7 @@ const AppInput = React.forwardRef<HTMLInputElement, AppInputProps>(
         ) : label && type === "password" ? (
           <FormLabel
             htmlFor={id}
-            fontSize={themes.fontSizes.small}
+            fontSize={{ base: themes.fontSizes.tiny, lg: themes.fontSizes.small }}
             fontWeight="500"
             color={colorMode === "dark" ? "#C9CED6" : "#11161d"}
           >

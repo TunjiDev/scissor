@@ -79,23 +79,23 @@ function ProfilePage() {
   }
 
   return (
-    <Box px={"3rem"}>
+    <Box px={{ base: "1.5rem", lg: "3rem" }}>
       <Flex justifyContent={"center"} mt={"1rem"}>
         <Text
           bg={"radial-gradient(95.19% 12441.23% at 5.56% 79.01%, #EB568E 0%, #144EE3 100%)"}
-          fontSize={"2.307rem"}
+          fontSize={{ base: "1.807rem", md: "2.307rem" }}
           backgroundClip={"text"}
           fontWeight={800}
         >
           <Link href={"/"}>Scissor</Link>
         </Text>
-        <Text fontSize={".875rem"} fontWeight={"300"}>
+        <Text fontSize={{ base: ".5rem", lg: ".875rem" }} fontWeight={"300"}>
           Ⓢ
         </Text>
       </Flex>
 
       <Box>
-        <Text fontWeight={600} fontSize={"2rem"}>
+        <Text fontWeight={600} fontSize={{ base: "1.2rem", lg: "2rem" }}>
           Profile
         </Text>
 
@@ -129,7 +129,7 @@ function ProfilePage() {
       </Box>
 
       <Box mt={"3rem"}>
-        <Text fontWeight={600} fontSize={"2rem"}>
+        <Text fontWeight={600} fontSize={{ base: "1.2rem", lg: "2rem" }}>
           Change Password
         </Text>
 
