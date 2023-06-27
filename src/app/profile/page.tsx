@@ -33,6 +33,30 @@ function ProfilePage() {
     formState: { errors, isSubmitting },
   } = formHook;
 
+  //Fetch user profile
+  const fetcher = async (url: string) => {
+    const response = await axiosAuth.get(url);
+    return response.data;
+  };
+
+  const { data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_BASE_URL}/user/profile`, fetcher);
+
+  if (isLoading) {
+    return (
+      <Flex justifyContent={"center"} alignItems={"center"} height={"100vh"}>
+        <Spinner />
+      </Flex>
+    );
+  }
+
+  if (error) {
+    return (
+      <Flex justifyContent={"center"} alignItems={"center"} height={"100vh"}>
+        <Spinner />
+      </Flex>
+    );
+  }
+
   //Submit change password
   const submit = async (data: ChangePasswordType) => {
     const sendRequest = async (url: string, data: ChangePasswordType) => {
@@ -55,28 +79,6 @@ function ProfilePage() {
 
     await sendRequest(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/change-password`, data);
   };
-
-  //Fetch user profile
-  const fetcher = async (url: string) => {
-    const response = await axiosAuth.get(url);
-    return response.data;
-  };
-
-  const { data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_BASE_URL}/user/profile`, fetcher);
-
-  if (isLoading) {
-    return (
-      <Flex justifyContent={"center"} alignItems={"center"} height={"100vh"}>
-        <Spinner />
-      </Flex>
-    );
-  }
-
-  if (error) {
-    return toast.error(`${error?.response?.data?.message || "Something went wrong"}`, {
-      id: "error",
-    });
-  }
 
   return (
     <Box px={{ base: "1.5rem", lg: "3rem" }}>

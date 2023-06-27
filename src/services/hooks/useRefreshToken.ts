@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import axios from "../axios";
 
 export const useRefreshToken = () => {
@@ -17,7 +17,9 @@ export const useRefreshToken = () => {
           session.user.accessToken = response.data.accessToken;
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      await signOut();
+    }
   };
 
   return refreshToken;

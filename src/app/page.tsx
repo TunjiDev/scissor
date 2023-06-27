@@ -405,7 +405,7 @@ function Home() {
                 <Spinner />
               </Flex>
             ) : session && !isLoading && userUrls?.length > 0 ? (
-              <DataTable columns={columns} data={userUrls} customStyles={useCustomStyles()} />
+              <DataTable columns={columns} data={userUrls} customStyles={useCustomStyles()} pagination />
             ) : (
               <Flex justifyContent={"center"} alignItems={"center"} h={"20rem"}>
                 <Text>No Links Found</Text>

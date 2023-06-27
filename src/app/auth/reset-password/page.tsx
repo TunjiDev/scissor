@@ -51,7 +51,7 @@ function ResetPasswordPage() {
           });
 
           setTimeout(() => {
-            router.push("/login");
+            router.push("/auth/login");
           }, 2000);
         }
       } catch (error: any) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import axios from "../axios";
 import { useRefreshToken } from "./useRefreshToken";
@@ -8,6 +8,7 @@ import { useRefreshToken } from "./useRefreshToken";
 const useAxiosAuth = () => {
   const { data: session } = useSession();
   const refreshToken = useRefreshToken();
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
     const requestInterceptor = axios.interceptors.request.use(
@@ -30,9 +31,19 @@ const useAxiosAuth = () => {
         const originalRequest = error.config;
         if (error.response.status === 401 && !originalRequest.sent) {
           originalRequest.sent = true;
-          await refreshToken();
-          originalRequest.headers["Authorization"] = `Bearer ${session?.user?.accessToken}`;
-          return axios(originalRequest);
+          if (!isRefreshing) {
+            setIsRefreshing(true);
+            try {
+              await refreshToken();
+              const updatedConfig = { ...originalRequest };
+              updatedConfig.headers["Authorization"] = `Bearer ${session?.user?.accessToken}`;
+              return axios(updatedConfig);
+            } catch (error) {
+              throw error;
+            } finally {
+              setIsRefreshing(false);
+            }
+          }
         }
         return Promise.reject(error);
       }
@@ -42,7 +53,7 @@ const useAxiosAuth = () => {
       axios.interceptors.request.eject(requestInterceptor);
       axios.interceptors.response.eject(responseInterceptor);
     };
-  }, [refreshToken, session]);
+  }, [isRefreshing, refreshToken, session]);
 
   return axios;
 };
