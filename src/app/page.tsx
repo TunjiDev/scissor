@@ -80,20 +80,20 @@ function Home() {
   };
 
   const { data: userUrls, isLoading } = useSWR(
-    session ? `${process.env.NEXT_PUBLIC_BASE_URL}/user/urls` : null,
+    session ? `${process.env.NEXT_PUBLIC_BASE_URL_API}/user/urls` : null,
     fetcher
   );
 
   const deleteHandler = async (data: TableType) => {
     try {
-      const response = await axiosAuth.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/url/${data.id}`);
+      const response = await axiosAuth.delete(`${process.env.NEXT_PUBLIC_BASE_URL_API}/url/${data.id}`);
 
       if (response.status === 200) {
         toast.success(response?.data.message, {
           id: "success",
         });
 
-        mutate(`${process.env.NEXT_PUBLIC_BASE_URL}/user/urls`);
+        mutate(`${process.env.NEXT_PUBLIC_BASE_URL_API}/user/urls`);
       }
     } catch (error: any) {
       return toast.error(`${error?.response?.data?.message || "An error occurred during the process"}`, {
@@ -106,14 +106,14 @@ function Home() {
     try {
       setLoadingRows((prevLoadingRows: any) => [...prevLoadingRows, data.id]);
       const response = await axiosAuth.patch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/url/${data.id}/status?status=${data.status ? "false" : "true"}`
+        `${process.env.NEXT_PUBLIC_BASE_URL_API}/url/${data.id}/status?status=${data.status ? "false" : "true"}`
       );
       if (response.status === 200) {
         toast.success(response?.data.message, {
           id: "success",
         });
         setLoadingRows((prevLoadingRows: any) => prevLoadingRows.filter((row: any) => row !== data.id));
-        mutate(`${process.env.NEXT_PUBLIC_BASE_URL}/user/urls`);
+        mutate(`${process.env.NEXT_PUBLIC_BASE_URL_API}/user/urls`);
       }
     } catch (error: any) {
       setLoadingRows((prevLoadingRows: any) => prevLoadingRows.filter((row: any) => row !== data.id));
@@ -138,8 +138,8 @@ function Home() {
               id: "success",
             });
 
-            await axiosAuth.post(`${process.env.NEXT_PUBLIC_BASE_URL}/url/${response?.data.result.id}/qrcode`);
-            mutate(`${process.env.NEXT_PUBLIC_BASE_URL}/user/urls`);
+            await axiosAuth.post(`${process.env.NEXT_PUBLIC_BASE_URL_API}/url/${response?.data.result.id}/qrcode`);
+            mutate(`${process.env.NEXT_PUBLIC_BASE_URL_API}/user/urls`);
           }
         } catch (error: any) {
           return toast.error(`${error?.response?.data?.message || "An error occurred during the process"}`, {
@@ -148,7 +148,7 @@ function Home() {
         }
       };
 
-      await sendRequest(`${process.env.NEXT_PUBLIC_BASE_URL}/url`, data);
+      await sendRequest(`${process.env.NEXT_PUBLIC_BASE_URL_API}/url`, data);
     }
 
     if (!session)
@@ -160,7 +160,7 @@ function Home() {
   const columns: TableColumn<TableType>[] = [
     {
       name: "Short Link",
-      cell: (row) => `https://seazus.onrender.com/${row.shortUrl}`,
+      cell: (row) => `${process.env.NEXT_PUBLIC_BASE_URL}/${row.shortUrl}`,
     },
     {
       name: "Original Link",

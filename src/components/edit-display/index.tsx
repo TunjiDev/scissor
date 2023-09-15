@@ -52,7 +52,7 @@ const Edit = ({ openModal, setOpenModal, rowData }: PropType) => {
           toast.success(response?.data.message, {
             id: "success",
           });
-          mutate(`${process.env.NEXT_PUBLIC_BASE_URL}/user/urls`);
+          mutate(`${process.env.NEXT_PUBLIC_BASE_URL_API}/user/urls`);
         }
       } catch (error: any) {
         return toast.error(`${error?.response?.data?.message || "An error occurred during the process"}`, {
@@ -61,7 +61,7 @@ const Edit = ({ openModal, setOpenModal, rowData }: PropType) => {
       }
     };
 
-    await sendRequest(`${process.env.NEXT_PUBLIC_BASE_URL}/url/${rowData.id}`, data);
+    await sendRequest(`${process.env.NEXT_PUBLIC_BASE_URL_API}/url/${rowData.id}`, data);
   };
 
   return (

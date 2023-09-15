@@ -50,7 +50,7 @@ function ForgotPasswordPage() {
       }
     };
 
-    await sendRequest(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/forgot-password`, data);
+    await sendRequest(`${process.env.NEXT_PUBLIC_BASE_URL_API}/auth/forgot-password`, data);
   };
 
   return (

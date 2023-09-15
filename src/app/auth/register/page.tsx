@@ -61,7 +61,7 @@ function RegisterPage() {
       }
     };
 
-    await sendRequest(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/register`, data);
+    await sendRequest(`${process.env.NEXT_PUBLIC_BASE_URL_API}/auth/register`, data);
   };
 
   return (

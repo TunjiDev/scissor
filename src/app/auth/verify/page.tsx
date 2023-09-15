@@ -60,7 +60,7 @@ function VerifyPage() {
       }
     };
 
-    await sendRequest(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify-email/${userIdState}`, data);
+    await sendRequest(`${process.env.NEXT_PUBLIC_BASE_URL_API}/auth/verify-email/${userIdState}`, data);
   };
 
   return (

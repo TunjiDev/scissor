@@ -61,7 +61,7 @@ function ResetPasswordPage() {
       }
     };
 
-    await sendRequest(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/reset-password?userId=${userIdState}`, data);
+    await sendRequest(`${process.env.NEXT_PUBLIC_BASE_URL_API}/auth/reset-password?userId=${userIdState}`, data);
   };
 
   return (

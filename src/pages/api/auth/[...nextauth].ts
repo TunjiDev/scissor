@@ -12,7 +12,7 @@ export default NextAuth({
       },
 
       async authorize(credentials, req) {
-        const response = await axios.post("https://seazus.onrender.com/api/auth/login", {
+        const response = await axios.post(`${process.env.BASE_URL_API}/auth/login`, {
           email: credentials?.email,
           password: credentials?.password,
         });

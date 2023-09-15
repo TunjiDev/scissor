@@ -39,7 +39,7 @@ function ProfilePage() {
     return response.data;
   };
 
-  const { data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_BASE_URL}/user/profile`, fetcher);
+  const { data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_BASE_URL_API}/user/profile`, fetcher);
 
   if (isLoading) {
     return (
@@ -77,7 +77,7 @@ function ProfilePage() {
       }
     };
 
-    await sendRequest(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/change-password`, data);
+    await sendRequest(`${process.env.NEXT_PUBLIC_BASE_URL_API}/auth/change-password`, data);
   };
 
   return (

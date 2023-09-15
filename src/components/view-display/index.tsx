@@ -32,11 +32,11 @@ const View = ({ openModal, setOpenModal, rowData }: PropType) => {
             <Text fontWeight={700}>Short Link</Text>
             <Flex alignItems="center">
               <Text fontWeight={300} fontSize={{ base: "14px", lg: "16px" }} mr=".5rem">
-                {`https://seazus.onrender.com/${rowData.shortUrl}`}
+                {`${process.env.NEXT_PUBLIC_BASE_URL}/${rowData.shortUrl}`}
               </Text>
               <Box>
                 <CopyIcon
-                  onClick={() => clipboard.copy(`https://seazus.onrender.com/${rowData.shortUrl}`)}
+                  onClick={() => clipboard.copy(`${process.env.NEXT_PUBLIC_BASE_URL}/${rowData.shortUrl}`)}
                   cursor="pointer"
                   color={colorMode === "dark" ? "#C9CED6" : "#11161d"}
                 />
