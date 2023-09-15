@@ -192,7 +192,7 @@ function index() {
             <AccordionPanel fontSize={{ base: ".75rem", md: "1rem" }} pb={4}>
               Yes, there is an API available for integrating the URL shortening service into your own applications or
               websites. You can find the documentation for the API
-              <Link href="https://seazus.onrender.com/swagger" className="link" target="_blank" rel="noreferrer">
+              <Link href="https://seazus-be.onrender.com/swagger" className="link" target="_blank" rel="noreferrer">
                 {" "}
                 here
               </Link>
